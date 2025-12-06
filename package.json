@@ -1,6 +1,6 @@
 {
   "name": "bun-gridfs-storage",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A Multer storage engine for GridFS that works with both Bun and Node.js",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

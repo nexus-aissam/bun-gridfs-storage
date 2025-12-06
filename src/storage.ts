@@ -48,15 +48,21 @@ export class BunGridFSStorage extends EventEmitter {
   private connected: boolean = false;
   private defaultBucketName: string = "fs";
   private defaultChunkSize: number = 255 * 1024; // 255KB
+  private mongoClient: any = null;
 
   constructor(options: BunGridFSStorageOptions) {
     super();
 
-    // Handle db as promise or direct value
-    if (options.db instanceof Promise) {
+    // Handle different connection methods
+    if (options.url) {
+      // Connect using MongoDB URI
+      this.dbPromise = this.connectWithUrl(options.url);
+    } else if (options.db instanceof Promise) {
       this.dbPromise = options.db;
-    } else {
+    } else if (options.db) {
       this.dbPromise = Promise.resolve(options.db);
+    } else {
+      throw new Error("Either 'db' or 'url' must be provided");
     }
 
     // Default file config function
@@ -69,6 +75,17 @@ export class BunGridFSStorage extends EventEmitter {
 
     // Initialize connection
     this.initConnection();
+  }
+
+  /**
+   * Connect to MongoDB using a connection URI
+   * @private
+   */
+  private async connectWithUrl(url: string): Promise<any> {
+    const { MongoClient } = await import("mongodb");
+    this.mongoClient = new MongoClient(url);
+    await this.mongoClient.connect();
+    return this.mongoClient.db();
   }
 
   /**
@@ -271,5 +288,18 @@ export class BunGridFSStorage extends EventEmitter {
    */
   setDefaultChunkSize(size: number): void {
     this.defaultChunkSize = size;
+  }
+
+  /**
+   * Close the MongoDB connection (only if connected via URL)
+   * Call this when shutting down your application
+   */
+  async close(): Promise<void> {
+    if (this.mongoClient) {
+      await this.mongoClient.close();
+      this.mongoClient = null;
+      this.connected = false;
+      this.bucket = null;
+    }
   }
 }

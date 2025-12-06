@@ -64,7 +64,7 @@ export interface FileConfig {
 }
 
 /**
- * Multer file type
+ * Multer file type - compatible with Express.Multer.File
  */
 export interface MulterFile {
   fieldname: string;
@@ -73,10 +73,10 @@ export interface MulterFile {
   mimetype: string;
   size: number;
   stream: NodeJS.ReadableStream;
-  destination: string;
-  filename: string;
-  path: string;
-  buffer: Buffer;
+  destination?: string;
+  filename?: string;
+  path?: string;
+  buffer?: Buffer;
 }
 
 /**
@@ -89,14 +89,31 @@ export type FileConfigCallback = (
 ) => Promise<FileConfig> | FileConfig;
 
 /**
+ * MongoDB Db interface - compatible with any mongodb version
+ */
+export interface MongoDbLike {
+  collection: (name: string) => unknown;
+  databaseName?: string;
+}
+
+/**
  * Options for initializing BunGridFSStorage
  */
 export interface BunGridFSStorageOptions {
   /**
-   * MongoDB database connection
-   * Can be a Promise (for deferred connection) or direct Db instance
+   * MongoDB database connection - supports multiple formats:
+   * - Direct Db instance (mongoose.connection.db)
+   * - Promise that resolves to Db instance
+   * - MongoDB connection URI string (e.g., "mongodb://localhost:27017/mydb")
    */
-  db: Promise<import("mongodb").Db> | import("mongodb").Db;
+  db?: Promise<MongoDbLike> | MongoDbLike;
+
+  /**
+   * MongoDB connection URI string
+   * Use this if you don't have a mongoose connection
+   * Example: "mongodb://localhost:27017/mydb"
+   */
+  url?: string;
 
   /**
    * Optional callback to configure file storage

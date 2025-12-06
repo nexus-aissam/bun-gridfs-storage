@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2025-12-06
+
+### Added
+
+- **URL Connection**: Connect directly with MongoDB URI string (`url` option) - no mongoose required!
+- **close() Method**: Properly close MongoDB connections when using URL
+- Exported `MongoDbLike` type for better TypeScript integration
+
+### Fixed
+
+- **Type Compatibility**: Fixed TypeScript type conflicts with mongoose's internal mongodb types
+- **MongoDbLike Interface**: Added flexible `MongoDbLike` interface for db parameter (compatible with `mongoose.connection.db`)
+- **MulterFile Type**: Made optional fields truly optional (`destination`, `filename`, `path`, `buffer`)
+
+---
+
 ## [1.1.0] - 2025-12-06
 
 ### Changed

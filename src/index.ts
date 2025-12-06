@@ -15,4 +15,5 @@ export type {
   BunGridFSStorageOptions,
   BunGridFSStorageEvents,
   MulterFile,
+  MongoDbLike,
 } from "./types";
