@@ -5,7 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2025-01-XX
+## [1.1.0] - 2025-12-06
+
+### Changed
+
+- **Improved Compatibility**: Now supports mongoose 5.x, 6.x, 7.x, and 8.x
+- **Improved Compatibility**: Now supports mongodb driver 4.x, 5.x, and 6.x
+- **Dynamic Import**: GridFSBucket is now dynamically imported for version compatibility
+- **Reduced Bundle Size**: From 1.3MB to ~5KB by marking dependencies as external
+- **Removed src from npm**: Package now only includes dist folder
+
+### Fixed
+
+- Type conflicts between different mongodb versions
+- Compatibility issues with older mongoose versions
+
+### Dependencies
+
+- **Peer Dependencies** (updated):
+  - `mongodb` >=4.0.0 (was ^6.0.0)
+  - `mongoose` >=5.0.0 (was ^8.0.0)
+  - `multer` >=1.4.0
+
+---
+
+## [1.0.0] - 2025-12-06
 
 ### Added
 
@@ -46,9 +70,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Dependencies
 
 - **Peer Dependencies**:
-  - `mongodb` ^6.0.0
-  - `mongoose` ^8.0.0
-  - `multer` ^1.4.0
+  - `mongodb` >=4.0.0
+  - `mongoose` >=5.0.0
+  - `multer` >=1.4.0
 - **Dev Dependencies**:
   - `@types/express` ^5.0.0
   - `@types/multer` ^1.4.12
@@ -65,7 +89,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Testing
 
-- 13+ unit tests covering core functionality
+- 20 unit tests covering core functionality
 - Integration tests with mocked MongoDB
 - Test coverage for:
   - Constructor variations
@@ -81,7 +105,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dual build output (ESM and CommonJS)
 - TypeScript declaration files
 - Optimized for tree-shaking
-- Minimal bundle size (1.34 MB bundled with dependencies)
+- Minimal bundle size (~5KB with external dependencies)
 
 ## [Unreleased]
 
