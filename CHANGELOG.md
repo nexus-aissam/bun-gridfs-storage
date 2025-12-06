@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.4] - 2025-12-06
+
+### Fixed
+
+- **Bucket Name**: Now correctly uses `fileConfig.bucketName` for uploads instead of default "fs" bucket
+- Files are now saved to the correct GridFS collection (e.g., `uploads.files` instead of `fs.files`)
+
+---
+
 ## [1.1.2] - 2025-12-06
 
 ### Added
