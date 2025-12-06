@@ -105,10 +105,9 @@ describe("BunGridFSStorage", () => {
       const storage = new BunGridFSStorage({ db: mockDb });
 
       // Access private fileConfig through type assertion
-      const config = await (storage as any).fileConfig(
-        {},
-        { originalname: "test.txt" } as MulterFile
-      );
+      const config = await (storage as any).fileConfig({}, {
+        originalname: "test.txt",
+      } as MulterFile);
 
       expect(config.filename).toBe("test.txt");
       expect(config.bucketName).toBe("fs");
@@ -126,10 +125,9 @@ describe("BunGridFSStorage", () => {
         }),
       });
 
-      const config = await (storage as any).fileConfig(
-        {},
-        { originalname: "test.txt" } as MulterFile
-      );
+      const config = await (storage as any).fileConfig({}, {
+        originalname: "test.txt",
+      } as MulterFile);
 
       expect(config.filename).toBe("prefix-test.txt");
       expect(config.bucketName).toBe("custom");
@@ -151,10 +149,9 @@ describe("BunGridFSStorage", () => {
         },
       });
 
-      const config = await (storage as any).fileConfig(
-        {},
-        { originalname: "test.txt" } as MulterFile
-      );
+      const config = await (storage as any).fileConfig({}, {
+        originalname: "test.txt",
+      } as MulterFile);
 
       expect(config.filename).toBe("async-test.txt");
       expect(config.bucketName).toBe("async-bucket");
