@@ -143,15 +143,22 @@ export class BunGridFSStorage extends EventEmitter {
         await this.waitForConnection();
       }
 
-      if (!this.bucket) {
-        throw new Error("GridFS bucket not initialized");
+      if (!this.db) {
+        throw new Error("Database not initialized");
       }
 
       // Get file configuration
       const fileConfig = await this.fileConfig(req, file);
 
+      // Create bucket for this upload (use fileConfig.bucketName if provided)
+      const { GridFSBucket } = await import("mongodb");
+      const uploadBucket = new GridFSBucket(this.db, {
+        bucketName: fileConfig.bucketName || this.defaultBucketName,
+        chunkSizeBytes: fileConfig.chunkSize || this.defaultChunkSize,
+      });
+
       // Create upload stream
-      const uploadStream = this.bucket.openUploadStream(fileConfig.filename, {
+      const uploadStream = uploadBucket.openUploadStream(fileConfig.filename, {
         chunkSizeBytes: fileConfig.chunkSize || this.defaultChunkSize,
         metadata: fileConfig.metadata,
         contentType: fileConfig.contentType || file.mimetype,
