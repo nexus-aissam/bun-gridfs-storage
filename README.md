@@ -408,6 +408,7 @@ bun run build
 ```
 
 This will generate:
+
 - `dist/index.js` - CommonJS build
 - `dist/index.mjs` - ESM build
 - `dist/index.d.ts` - TypeScript declarations
@@ -470,7 +471,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 If you encounter any issues or have questions:
 
-- Open an issue on [GitHub](https://github.com/aissamirhir/bun-gridfs-storage/issues)
+- Open an issue on [GitHub](https://github.com/nexus-aissam/bun-gridfs-storage/issues)
 - Check existing issues for solutions
 
 ## Acknowledgments
