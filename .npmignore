@@ -1,0 +1,29 @@
+# Source files
+src/
+tests/
+
+# Development files
+tsconfig.json
+.gitignore
+.npmignore
+
+# Tests and coverage
+coverage/
+*.test.ts
+*.spec.ts
+
+# Documentation
+*.md
+!README.md
+
+# IDE
+.vscode/
+.idea/
+
+# Build artifacts
+*.tsbuildinfo
+.cache/
+
+# Logs
+logs/
+*.log

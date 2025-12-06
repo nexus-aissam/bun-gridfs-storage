@@ -1,0 +1,65 @@
+{
+  "name": "bun-gridfs-storage",
+  "version": "1.0.0",
+  "description": "A Multer storage engine for GridFS that works with both Bun and Node.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "bun run build:cjs && bun run build:esm && bun run build:types",
+    "build:cjs": "bun build ./src/index.ts --outfile ./dist/index.js --target node --format cjs",
+    "build:esm": "bun build ./src/index.ts --outfile ./dist/index.mjs --target node --format esm",
+    "build:types": "tsc --emitDeclarationOnly --outDir dist",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "prepublishOnly": "bun run build",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "multer",
+    "gridfs",
+    "mongodb",
+    "storage",
+    "bun",
+    "nodejs",
+    "file-upload",
+    "mongoose"
+  ],
+  "author": "Aissam Irhir <aissamirhir@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aissamirhir/bun-gridfs-storage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aissamirhir/bun-gridfs-storage/issues"
+  },
+  "homepage": "https://github.com/aissamirhir/bun-gridfs-storage#readme",
+  "peerDependencies": {
+    "mongodb": "^6.0.0",
+    "mongoose": "^8.0.0",
+    "multer": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/multer": "^1.4.12",
+    "bun-types": "latest",
+    "typescript": "^5.9.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
+  }
+}
