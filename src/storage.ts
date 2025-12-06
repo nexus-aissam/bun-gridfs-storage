@@ -8,8 +8,7 @@
 
 import { EventEmitter } from "events";
 import type { Request } from "express";
-import { GridFSBucket, ObjectId } from "mongodb";
-import type { Db } from "mongodb";
+import type { ObjectId } from "mongodb";
 import type {
   BunGridFSStorageOptions,
   FileConfig,
@@ -17,6 +16,9 @@ import type {
   GridFSFile,
   MulterFile,
 } from "./types";
+
+// Type for GridFSBucket (works with any mongodb version)
+type GridFSBucketType = InstanceType<typeof import("mongodb").GridFSBucket>;
 
 /**
  * Custom Bun-compatible GridFS Storage Engine for Multer
@@ -39,9 +41,9 @@ import type {
  * ```
  */
 export class BunGridFSStorage extends EventEmitter {
-  private dbPromise: Promise<Db>;
-  private db: Db | null = null;
-  private bucket: GridFSBucket | null = null;
+  private dbPromise: Promise<any>;
+  private db: any = null;
+  private bucket: GridFSBucketType | null = null;
   private fileConfig: FileConfigCallback;
   private connected: boolean = false;
   private defaultBucketName: string = "fs";
@@ -83,10 +85,13 @@ export class BunGridFSStorage extends EventEmitter {
 
       // Only create bucket if db.collection method exists
       if (typeof this.db.collection === "function") {
+        // Dynamically import GridFSBucket to support all mongodb versions
+        const { GridFSBucket } = await import("mongodb");
+
         this.bucket = new GridFSBucket(this.db, {
           bucketName: this.defaultBucketName,
           chunkSizeBytes: this.defaultChunkSize,
-        });
+        }) as GridFSBucketType;
 
         this.connected = true;
         this.emit("connection", this.db);
@@ -248,7 +253,7 @@ export class BunGridFSStorage extends EventEmitter {
    * Get the GridFS bucket instance
    * @returns GridFSBucket instance or null if not initialized
    */
-  getBucket(): GridFSBucket | null {
+  getBucket(): GridFSBucketType | null {
     return this.bucket;
   }
 
